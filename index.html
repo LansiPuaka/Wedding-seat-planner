@@ -789,10 +789,10 @@ Bride’s family/siblings</p>
                 <div id="photo-wall-grid" class="space-y-4">
                 <article class="bg-burgundy-900/80 border border-blush-300/20 rounded-2xl overflow-hidden shadow-md">
                     <div class="relative aspect-[4/3] bg-burgundy-950 overflow-hidden cursor-pointer" onclick="openLightbox('p1')">
-                        <img src="./Wedding Seat Planner &amp; Event Companion_files/photo-1519741497674-611481863552" alt="So excited to celebrate Isabella &amp; Chris tonight!" onerror="this.src='https://placehold.co/600x450/420D17/F9E4E7?text=Wedding+Memory'" class="w-full h-full object-cover">
+                        <img src="./Wedding Seat Planner &amp; Event Companion_files/photo-1519741497674-611481863552" alt="So excited to celebrate Isabella &amp; Raja Shahirah tonight!" onerror="this.src='https://placehold.co/600x450/420D17/F9E4E7?text=Wedding+Memory'" class="w-full h-full object-cover">
                     </div>
                     <div class="p-3.5">
-                        <p class="text-xs text-white font-medium leading-snug mb-2.5">"So excited to celebrate Isabella &amp; Chris tonight!"</p>
+                        <p class="text-xs text-white font-medium leading-snug mb-2.5">"So excited to celebrate Isabella &amp; Raja Shahirah tonight!"</p>
                         <div class="flex items-center justify-between pt-2 border-t border-blush-300/15 text-[11px]">
                             <div>
                                 <span class="font-semibold text-blush-200 block">Amelia Davis</span>
@@ -1486,7 +1486,7 @@ Bride’s family/siblings</p>
                 </div>
                 <div>
                     <label class="block font-semibold uppercase text-burgundy-700 mb-1">Wedding Wish</label>
-                    <input type="text" id="photo-caption-input" placeholder="Congratulations Isabella &amp; Chris!" required="" class="w-full px-3 py-2 rounded-xl bg-white border border-blush-300 text-sm">
+                    <input type="text" id="photo-caption-input" placeholder="Congratulations Michael Calvin &amp; Raja Shahirah!" required="" class="w-full px-3 py-2 rounded-xl bg-white border border-blush-300 text-sm">
                 </div>
                 <button type="submit" class="w-full py-2.5 rounded-xl bg-burgundy-800 hover:bg-burgundy-900 text-white font-semibold text-xs">
                     Post to Photo Wall
@@ -1606,7 +1606,7 @@ Bride’s family/siblings</p>
             ],
             tentative: [
                 { id: "s1", time: "5:30 PM", title: "Guest Arrival & Welcome Drinks", desc: "Check in at the Ballroom Foyer and enjoy chilled rose lychee mocktails." },
-                { id: "s2", time: "6:15 PM", title: "Grand Bridal Entrance", desc: "Isabella & Chris enter via Ballroom 2 along the bridal runway to the Stage." },
+                { id: "s2", time: "6:15 PM", title: "Grand Bridal Entrance", desc: "Isabella & Raja Shahirah enter via Ballroom 2 along the bridal runway to the Stage." },
                 { id: "s3", time: "6:45 PM", title: "Blessing & Cake Cutting", desc: "Ceremonial cake cutting and family blessings on the main stage." },
                 { id: "s4", time: "7:15 PM", title: "Royal Banquet Dinner Service", desc: "Four-course Halal celebratory feast served to all tables." },
                 { id: "s5", time: "8:30 PM", title: "First Dance & Speeches", desc: "Heartfelt toasts from family followed by the couple's first dance." },
@@ -2399,18 +2399,20 @@ Bride’s family/siblings</p>
         };
 
         async function loadDrivePhotos() {
-    if (!GOOGLE_DRIVE_SCRIPT_URL || GOOGLE_DRIVE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyMNr6Xry-Nm5uLdV752R_bdxsKWAWk_Yl8DObyESRWMh_fknA1WOmrTUL2EM4ffw3lOg/exec") return;
-    try {
-        const res = await fetch(GOOGLE_DRIVE_SCRIPT_URL);
-        const drivePhotos = await res.json();
-        if (Array.isArray(drivePhotos) && drivePhotos.length > 0) {
-            weddingData.photos = drivePhotos;
-            renderPhotoWall();
+            if (!GOOGLE_DRIVE_SCRIPT_URL || GOOGLE_DRIVE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyMNr6Xry-Nm5uLdV752R_bdxsKWAWk_Yl8DObyESRWMh_fknA1WOmrTUL2EM4ffw3lOg/exec") return;
+            try {
+                const res = await fetch(GOOGLE_DRIVE_SCRIPT_URL + "?t=" + Date.now());
+                const drivePhotos = await res.json();
+                if (Array.isArray(drivePhotos) && drivePhotos.length > 0) {
+                    weddingData.photos = drivePhotos;
+                    localStorage.setItem("wedding_planner_mobile_v3", JSON.stringify(weddingData));
+                    renderPhotoWall();
+                    lucide.createIcons();
+                }
+            } catch (err) {
+                console.error("Failed to load Drive photos:", err);
+            }
         }
-    } catch (err) {
-        console.error("Failed to load Drive photos:", err);
-    }
-}
 
 window.submitGuestPhoto = async function(e) {
     e.preventDefault();
